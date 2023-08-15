@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Buy
+{% endblock %}
+
+{% block main %}
+    <form action="/buy" method="post">
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="symbol" placeholder="Symbol" type="text" id="option-1">
+        </div>
+        <div class="form-group">
+            <select class="form-control" name="symbol" id="option-2">
+                <option disabled selected value="">Select from already owned stocks</option>
+                {% for stock in stocks %}
+                    <option value="{{ stock.symbol }}">{{ stock.symbol }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <input autocomplete="off" autofocus class="form-control" name="shares" placeholder="Shares" type="number">
+        </div>
+        <button class="btn btn-success" type="submit">Buy</button>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+    <script>
+        $("#option-1").on("input", function () {
+            $("#option-2").prop('disabled', $(this).val() != "");
+        });
+        $("#option-2").on("input", function () {
+            $("#option-1").prop('disabled', $(this).val() != "");
+        });
+    </script>
+{% endblock %}
